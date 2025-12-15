@@ -2,6 +2,8 @@
 
 A LiteLLM proxy server with built-in message sanitization for Mistral models.
 
+This is very handy when self-hosting Devstral 2 or other Mistral models using **llama.cpp**.
+
 ## Features
 
 - **Mistral Message Sanitization**: Automatically enforces Mistral's conversation template constraints:
