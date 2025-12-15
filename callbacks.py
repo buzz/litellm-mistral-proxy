@@ -9,9 +9,6 @@ from typing import List, Dict, Any, Union
 from litellm.integrations.custom_logger import CustomLogger
 from litellm.proxy.proxy_server import UserAPIKeyAuth, DualCache
 from litellm.types.utils import CallTypesLiteral
-from litellm._logging import verbose_logger
-
-logger = verbose_logger.getChild("MistralSanitizer")
 
 
 class MistralSanitizerHandler(CustomLogger):
@@ -28,18 +25,8 @@ class MistralSanitizerHandler(CustomLogger):
         # 1. Apply only to chat completion endpoints (streaming or standard)
         if call_type in {"completion", "acompletion"}:
             if "messages" in data and isinstance(data["messages"], list):
-                logger.debug("Processing %s request...", call_type)
-
                 # 2. Run the sanitization logic
-                original_count = len(data["messages"])
                 data["messages"] = self._fix_mistral_messages(data["messages"])
-
-                if len(data["messages"]) != original_count:
-                    logger.info(
-                        "Sanitized messages: %d -> %d",
-                        original_count,
-                        len(data["messages"]),
-                    )
 
         return data
 
@@ -107,8 +94,6 @@ class MistralSanitizerHandler(CustomLogger):
             is_tool_result = msg["role"] == "tool"
 
             if roles_match and not is_tool_result:
-                logger.debug("Squashing consecutive %s messages.", msg["role"])
-
                 # Merge content into the last message
                 last_msg["content"] = self._merge_contents(
                     last_msg.get("content"), msg.get("content")
