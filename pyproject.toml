@@ -1,0 +1,10 @@
+[project]
+name = "litellm-mistral-proxy"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+# 3.14: ImportError: cannot import name 'BaseDefaultEventLoopPolicy' from 'asyncio.events'
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "litellm[proxy]>=1.80.9",
+]

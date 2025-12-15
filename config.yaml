@@ -1,0 +1,13 @@
+general_settings:
+  master_key: os.environ/MASTER_KEY
+
+litellm_settings:
+  # Module exposing the callback handler instance
+  callbacks: callbacks.proxy_handler_instance
+
+model_list:
+  - model_name: os.environ/MODEL_NAME
+    litellm_params:
+      model: os.environ/API_MODEL
+      api_key: os.environ/API_KEY
+      api_base: os.environ/API_BASE
